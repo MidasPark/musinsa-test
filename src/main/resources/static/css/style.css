@@ -1,0 +1,6 @@
+body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+header { background: #f8f9fa; padding: 20px; border-bottom: 1px solid #ddd; }
+footer { background: #f8f9fa; padding: 20px; margin-top: 50px; text-align: center; }
+nav a { margin-right: 15px; text-decoration: none; color: #007bff; }
+
+h1 a { text-decoration: none; color: #000;}

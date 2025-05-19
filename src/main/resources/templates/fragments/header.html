@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common-header">
+    <meta charset="UTF-8">
+    <title>Musinsa Coding Test</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header th:fragment="common-header-content">
+    <h1><a href="/">Musinsa</a></h1>
+    <nav>
+        <ul style="display:flex; gap:1rem; list-style:none; padding:0;">
+            <li><a href="/implement1">구현1</a></li>
+            <li><a href="/implement2">구현2</a></li>
+            <li><a href="/implement3">구현3</a></li>
+            <li><a href="/implement4">구현4</a></li>
+            <li><a href="/swagger-ui.html" target="_blank">스웨거</a></li>
+            <li><a href="/h2-console" target="_blank">h2 console</a></li>
+        </ul>
+    </nav>
+</header>
+</body>
+</html>
