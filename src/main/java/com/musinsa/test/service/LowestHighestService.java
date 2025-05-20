@@ -40,7 +40,7 @@ public class LowestHighestService {
     }
 
     /**
-     * 주어진 카테코리로 최저가 최고가 아이템을 찾기
+     * 주어진 카테코리로 최저가 최고가 상품을 찾기
      *
      * @param category 카테고리
      */

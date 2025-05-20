@@ -25,6 +25,19 @@ public class Item {
     private String brand;
     private String category;
     private int price;
+
+    @Column(updatable = false)
     private Date createdAt;
     private Date updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+        updatedAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = new Date();
+    }
 }

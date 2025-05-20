@@ -1,13 +1,11 @@
 package com.musinsa.test.controller.api;
 
 import com.musinsa.test.domain.Item;
-import com.musinsa.test.dto.ErrorResponseDto;
-import com.musinsa.test.dto.ItemRequestDto;
-import com.musinsa.test.dto.LowestHighestResponseDto;
-import com.musinsa.test.dto.SimpleSuccessResponseDto;
+import com.musinsa.test.dto.*;
 import com.musinsa.test.exception.RecordNotFoundException;
 import com.musinsa.test.service.ItemService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -17,6 +15,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -47,8 +46,22 @@ public class Implement4Controller {
     })
     @PostMapping("/item")
     public ResponseEntity<?> insert(
-            @Valid @ModelAttribute ItemRequestDto requestDto
+            @Valid @RequestBody ItemRequestDto requestDto,
+            BindingResult bindingResult
     ) {
+        if (bindingResult.hasErrors()) {
+            String errorMessage = bindingResult.getFieldErrors().stream()
+                    .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+                    .reduce((msg1, msg2) -> msg1 + ", " + msg2)
+                    .orElse("입력 값에 오류가 있습니다.");
+
+            ErrorResponseDto errorResponse = new ErrorResponseDto(
+                    "Validation Error",
+                    errorMessage
+            );
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+
         try {
             Item item = itemService.createItem(requestDto);
 
@@ -74,9 +87,23 @@ public class Implement4Controller {
     })
     @PutMapping("/item/{itemId}")
     public ResponseEntity<?> update(
-            @Valid @ModelAttribute ItemRequestDto requestDto,
+            @Valid @RequestBody ItemRequestDto requestDto,
+            BindingResult bindingResult,
             @PathVariable long itemId
     ) {
+        if (bindingResult.hasErrors()) {
+            String errorMessage = bindingResult.getFieldErrors().stream()
+                    .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+                    .reduce((msg1, msg2) -> msg1 + ", " + msg2)
+                    .orElse("입력 값에 오류가 있습니다.");
+
+            ErrorResponseDto errorResponse = new ErrorResponseDto(
+                    "Validation Error",
+                    errorMessage
+            );
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+
         try {
             itemService.updateItem(requestDto, itemId);
 

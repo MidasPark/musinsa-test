@@ -3,10 +3,66 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout}">
 <body>
-<head>
-</head>
 <div layout:fragment="content">
-    <p>3</p>
+    <form th:action="@{/implement3}" method="get">
+        <label for="categoryNameInput">카테고리 이름:</label>
+        <input type="text" id="categoryNameInput" name="categoryName" th:value="${requestedCategory}" placeholder="카테고리명 입력"/>
+        <button type="submit">조회</button>
+    </form>
+    <div th:if="${error != null}" style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 15px;">
+        <h4>오류 발생</h4>
+        <p th:text="${error}"></p>
+    </div>
+
+    <div th:if="${lowestHighest != null}">
+        <h3 th:text="${lowestHighest.카테고리} + ' 상품 정보'"></h3>
+
+        <h4>최저가 상품</h4>
+        <div th:if="${lowestHighest.최저가 != null and not #lists.isEmpty(lowestHighest.최저가)}">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>브랜드</th>
+                    <th>가격</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${lowestHighest.최저가}">
+                    <td th:text="${item.brand}"></td>
+                    <td th:text="${item.price}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${lowestHighest.최저가 == null or #lists.isEmpty(lowestHighest.최저가)}">
+            <p>최저가 상품 정보가 없습니다.</p>
+        </div>
+
+        <h4>최고가 상품</h4>
+        <div th:if="${lowestHighest.최고가 != null and not #lists.isEmpty(lowestHighest.최고가)}">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>브랜드</th>
+                    <th>가격</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${lowestHighest.최고가}">
+                    <td th:text="${item.brand}"></td>
+                    <td th:text="${item.price}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${lowestHighest.최고가 == null or #lists.isEmpty(lowestHighest.최고가)}">
+            <p>최고가 상품 정보가 없습니다.</p>
+        </div>
+    </div>
+
+    <div th:if="${error == null and lowestHighest == null}">
+        <p>조회할 카테고리를 입력해주세요.</p>
+    </div>
 </div>
 </body>
 </html>

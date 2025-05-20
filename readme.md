@@ -92,7 +92,8 @@ java -jar build/libs/musinsa-1.0-SNAPSHOT.jar
 - IDE에서 실행: IntelliJ IDEA, Eclipse 등의 IDE에서 MainApplication.java 파일을 직접 실행합니다.
 - 애플리케이션 실행 후, 기본적으로 H2 데이터베이스는 메모리 모드로 실행되며, Flyway에 의해 src/main/resources/db/migration 경로의 SQL 스크립트가 실행되어 초기 데이터가 구성됩니다.
 
-
-### 웹 테스트
-- http://localhost:8080 으로 접속하면 간단하게 API 테스트가 가능합니다.
+### Frontend 페이지 구현
+- 애플리케이션 실행 후 http://localhost:8080 으로 접속하면 웹 화면에서 각 기능을 확인 또는 테스트할 수 있습니다.
+  - 웹 화면은 관리자 페이지를 만든다고 가정하고 심플하게 구현했습니다.
+  - 각 페이지의 url 과제의 요구사항에 따라 /implement1 형태로 네이밍 했습니다.
 - Swagger UI를 통한 테스트를 원하시면 http://localhost:8080/swagger-ui.html 를 이용하시면 됩니다.

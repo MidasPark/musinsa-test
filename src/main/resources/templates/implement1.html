@@ -3,10 +3,36 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout}">
 <body>
-<head>
-</head>
 <div layout:fragment="content">
-    <p>1</p>
+    <h2>최저가 상품 정보</h2>
+    <div th:if="${lowestPrice != null and lowestPrice.lowestPriceItems != null and not #lists.isEmpty(lowestPrice.lowestPriceItems)}">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th>카테고리</th>
+                <th>브랜드</th>
+                <th>가격</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="itemDto : ${lowestPrice.lowestPriceItems}">
+                <td th:text="${itemDto.category}"></td>
+                <td th:text="${itemDto.brand}"></td>
+                <td th:text="${itemDto.price}"></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="2">총액</th>
+                <td th:text="${lowestPrice.totalPrice}"></td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div th:if="${lowestPrice == null or lowestPrice.lowestPriceItems == null or #lists.isEmpty(lowestPrice.lowestPriceItems)}">
+        <p>데이터가 없습니다.</p>
+    </div>
 </div>
 </body>
 </html>

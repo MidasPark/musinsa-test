@@ -26,7 +26,7 @@ public class BrandPriceService {
      * 현재는 요청 시마다 전체 데이터를 기반으로 계산
      * 대규모 트래픽이 요규되는 서비스에서는 성능 최적화를 위해 캐싱 처리나 쿼리 최적화 등아 고려해야 됨
      *
-     * @return BrandLowestPriceResponseDto 최소 총액 브랜드 정보 또는 조건 미충족 시 빈 응답
+     * @return 최소 총액 브랜드 정보 또는 조건 미충족 시 빈 응답
      */
     public BrandLowestPriceResponseDto getLowestPriceBrand() {
         List<Item> allItems = itemRepository.findAll();
@@ -40,7 +40,7 @@ public class BrandPriceService {
             return new BrandLowestPriceResponseDto();
         }
 
-        // 브랜드별 아이템 그룹화
+        // 브랜드별 상품 그룹화
         Map<String, List<Item>> itemsByBrand = allItems.stream().collect(Collectors.groupingBy(Item::getBrand));
 
         BrandLowestPriceDto bestLowestBrands = null;

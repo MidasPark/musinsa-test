@@ -3,6 +3,7 @@ package com.musinsa.test.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,9 +13,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Setter
-@NoArgsConstructor // Spring이 요청 파라미터를 객체에 바인딩할 때 기본 생성자가 필요합니다.
+@NoArgsConstructor
 @AllArgsConstructor
-@ToString // 로그 출력 등 디버깅 시 편리
+@ToString
 public class ItemRequestDto {
     @Schema(description = "브랜드 이름", example = "A", maxLength = 100)
     @NotBlank(message = "브랜드 이름은 필수입니다.")
@@ -27,6 +28,7 @@ public class ItemRequestDto {
     private String category;
 
     @Schema(description = "가격", example = "10000")
-    @Min(value = 0, message = "최소 가격은 0 이상이어야 합니다.") // 유효성 검사 예시
+    @NotNull(message = "가격은 필수입니다.")
+    @Min(value = 0, message = "최소 가격은 0 이상이어야 합니다.")
     private Integer price;
 }

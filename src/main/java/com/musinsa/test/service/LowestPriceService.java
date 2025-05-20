@@ -20,6 +20,11 @@ public class LowestPriceService {
 
     private final ItemRepository itemRepository;
 
+    /**
+     * 카테고리별 최저가 상품 목록과 총 가격을 포함한 응답 객체 반환
+     *
+     * @return LowestPriceResponseDto
+     */
     public LowestPriceResponseDto getLowestPrice() {
         // 람다 사용을 위해 Atomic 타입 사용
         AtomicInteger totalPrice = new AtomicInteger();

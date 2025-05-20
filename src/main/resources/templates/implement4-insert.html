@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<body>
+<div layout:fragment="content">
+    <h2>상품 추가/수정</h2>
+    <div>
+        <label for="brand">브랜드 이름:</label>
+        <input type="text" class="form-control" id="brand" name="brand" required/>
+    </div>
+    <br/>
+    <div>
+        <label for="category">카테고리 이름:</label>
+        <input type="text" class="form-control" id="category" name="category" required/>
+    </div>
+    <br/>
+    <div>
+        <label for="price">가격:</label>
+        <input type="number" class="form-control" id="price" name="price" required/>
+    </div>
+    <br/>
+    <div>
+        <button th:onclick="'addItem()'" type="button" class="btn btn-success">상품 추가</button>
+        <a th:href="@{/implement4}" class="btn btn-secondary">리스트로 돌아가기</a>
+    </div>
+
+    <script th:inline="javascript">
+        function addItem() {
+            if (!confirm("상품을 추가하시겠습니까?")) {
+                return false;
+            }
+
+            const brand = $('#brand').val().trim();
+            const category = $('#category').val().trim();
+            const price = $('#price').val().trim();
+
+            $.ajax({
+                url: '/api/implement4/item',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    brand: brand,
+                    category: category,
+                    price: price
+                }),
+                success: function(response) {
+                    let successMessage = '상품이 성공적으로 추가 되었습니다.';
+                    if (response.message) {
+                        successMessage = response.message
+                    }
+                    alert(successMessage);
+                    window.location.reload();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    let errorMessage = '상품 추가 중 오류가 발생했습니다.';
+                    if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                        errorMessage = jqXHR.responseJSON.message;
+                    }
+                    alert(errorMessage);
+                }
+            });
+        }
+    </script>
+</div>
+</body>
+</html>
