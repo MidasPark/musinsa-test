@@ -14,11 +14,11 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("SELECT DISTINCT i.category FROM Item i ORDER BY i.category ASC")
     List<String> findCategories();
 
-    // 카테고리에서 가격이 가장 낮은 아이템 하나를 조회
-    // 동일한 가격이 존재한다면 최근에 생성된 아이템을 리턴
+    // 카테고리에서 가격이 가장 낮은 상품 하나를 조회
+    // 동일한 가격이 존재한다면 최근에 생성된 상품을 리턴
     Optional<Item> findFirstByCategoryOrderByPriceAscUpdatedAtDesc(String category);
 
-    // 카테고리에서 가격이 가장 낮은 아이템 하나를 조회
-    // 동일한 가격이 존재한다면 최근에 생성된 아이템을 리턴
+    // 카테고리에서 가격이 가장 낮은 상품 하나를 조회
+    // 동일한 가격이 존재한다면 최근에 생성된 상품을 리턴
     Optional<Item> findFirstByCategoryOrderByPriceDescUpdatedAtAsc(String category);
 }

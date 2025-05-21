@@ -44,6 +44,7 @@ src
         ├── templates         // 서버 사이드 템플릿 파일 (Thymeleaf)
         └── application.properties 
 ~~~
+___
 
 ## 설계 고려사항
 ### 아키텍처
@@ -92,8 +93,38 @@ java -jar build/libs/musinsa-1.0-SNAPSHOT.jar
 - IDE에서 실행: IntelliJ IDEA, Eclipse 등의 IDE에서 MainApplication.java 파일을 직접 실행합니다.
 - 애플리케이션 실행 후, 기본적으로 H2 데이터베이스는 메모리 모드로 실행되며, Flyway에 의해 src/main/resources/db/migration 경로의 SQL 스크립트가 실행되어 초기 데이터가 구성됩니다.
 
-### Frontend 페이지 구현
+___
+
+## Frontend 페이지 구현
 - 애플리케이션 실행 후 http://localhost:8080 으로 접속하면 웹 화면에서 각 기능을 확인 또는 테스트할 수 있습니다.
   - 웹 화면은 관리자 페이지를 만든다고 가정하고 심플하게 구현했습니다.
   - 각 페이지의 url 과제의 요구사항에 따라 /implement1 형태로 네이밍 했습니다.
 - Swagger UI를 통한 테스트를 원하시면 http://localhost:8080/swagger-ui.html 를 이용하시면 됩니다.
+
+### 페이지 설명
+- `/implement1` - 카테고리 별 최저가격 브랜드와 상품 가격, 총액을 조회하는 페이지
+- `/implement2` - 단일 브랜드로 모든 카테고리 상품을 구매할 때 최저가격에 판매하는 브랜드와 카테고리의 상품가격, 총액을 조회하는 페이지
+- `/implement3` - 카테고리 이름으로 최저, 최고 가격 브랜드와 상품 가격을 조회하는 페이지
+- `/implement4` - 브랜드 및 상품을 관리(조회, 추가, 업데이트, 삭제)하는 페이지
+- `/swagger-ui/index.html` - API 문서를 확인하고 테스트할 수 있는 Swagger UI 페이지
+- `/h2-console/` - H2 데이터베이스 관리 콘솔 페이지 (개발 환경에서만 사용)
+___
+
+## 테스트 케이스 구현
+- 단위 테스트(Unit Test)와 통합 테스트(Integration Test)를 통해 기본적인 요구사항에 대한 다양한 시나리오를 검증하며, 합리적인 가정을 바탕으로 구현된 기능이 코드의 신뢰성을 보장합니다.
+
+## 단위 테스트 (Unit Test)
+### Repository 테스트
+- **ItemRepositoryTest**: 데이터 접근 계층 테스트
+
+### Service 테스트
+- **LowestPriceServiceTest**: 카테고리별 최저가 상품 조회 서비스 테스트
+- **BrandPriceServiceTest**: 브랜드별 최저가 상품 조회 서비스 테스트
+- **LowestHighestServiceTest**: 카테고리별 최저/최고가 상품 조회 서비스 테스트
+- **ItemServiceTest**: 상품 CRUD 서비스 테스트
+
+### 통합 테스트 (Integration Test)
+- **Implement1IntegrationTest**: 카테고리별 최저가 상품 조회 API 통합 테스트
+- **Implement2IntegrationTest**: 단일 브랜드 최저가 조회 API 통합 테스트
+- **Implement3IntegrationTest**: 카테고리별 최저/최고가 조회 API 통합 테스트
+- **Implement4IntegrationTest**: 상품 CRUD API 통합 테스트

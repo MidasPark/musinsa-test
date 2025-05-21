@@ -6,7 +6,7 @@ import com.musinsa.test.dto.ItemRequestDto;
 import com.musinsa.test.exception.RecordNotFoundException;
 import com.musinsa.test.repository.ItemRepository;
 import com.musinsa.test.util.PriceFormatter;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -24,6 +24,7 @@ public class ItemService {
      * @param itemId Item ID
      * @return Item 리턴
      */
+    @Transactional(readOnly = true)
     public Item getItemById(Long itemId) {
         return itemRepository.findById(itemId)
                 .orElseThrow(() -> new RecordNotFoundException("해당하는 상품을 찾을 수 없습니다."));
@@ -85,6 +86,7 @@ public class ItemService {
      * @param pageable Object
      * @return Page<ItemAdminDto>
      */
+    @Transactional(readOnly = true)
     public Page<ItemAdminDto> getList(Pageable pageable) {
         Page<Item> itemPage = itemRepository.findAll(pageable);
         return itemPage.map(this::convertToDto);
